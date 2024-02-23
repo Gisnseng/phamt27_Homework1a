@@ -11,6 +11,7 @@
         android:id="@+id/hairButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:checked="false"
         android:text="Hair" />
 
     <RadioButton
@@ -109,8 +110,8 @@
         android:layout_weight="0"
         android:spinnerMode="dropdown" />
 
-    <SurfaceView
-        android:id="@+id/surfaceView2"
+    <com.example.homework1a.Face
+        android:id="@+id/face"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

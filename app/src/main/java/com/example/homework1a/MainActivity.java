@@ -3,22 +3,9 @@ package com.example.homework1a;
 
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
-import androidx.core.view.WindowCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.example.homework1a.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -26,26 +13,52 @@ import android.widget.TextView;
 import android.widget.ArrayAdapter;
 
 public class MainActivity extends AppCompatActivity {
-    private AppController myAppController = new AppController();
+    //declare appcontrollers and views for appcontroller
+    private AppController myAppController = new AppController(this);
+    public Face face;
+    public RadioButton hairButton;
+    public RadioButton eyeButton;
+    public RadioButton skinButton;
+    public SeekBar redSeekBar;
+    public SeekBar greenSeekBar;
+    public SeekBar blueSeekBar;
+    public Spinner dropdown;
+    public Button randomFaceButton;
+
     //set controller but it doesn't do anything yet
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //set and add listeners for a lot of stuff
+        randomFaceButton = findViewById(R.id.randomFaceButton);
+        randomFaceButton.setOnClickListener(myAppController);
+        face = findViewById(R.id.face);
         //set buttons
-        RadioButton hairButton = findViewById(R.id.hairButton);
-        RadioButton eyeButton = findViewById(R.id.eyeButton);
-        RadioButton skinButton = findViewById(R.id.skinButton);
+        hairButton = findViewById(R.id.hairButton);
+        hairButton.setOnClickListener(myAppController);
+        eyeButton = findViewById(R.id.eyeButton);
+        eyeButton.setOnClickListener(myAppController);
+        skinButton = findViewById(R.id.skinButton);
+        skinButton.setOnClickListener(myAppController);
         //set seekbars and textbars
-        SeekBar redSeekBar = findViewById(R.id.redSeekbar);
-        SeekBar greenSeekBar = findViewById(R.id.greenSeekbar);
-        SeekBar blueSeekBar = findViewById(R.id.blueSeekbar);
+        redSeekBar = findViewById(R.id.redSeekbar);
+        redSeekBar.setOnSeekBarChangeListener(myAppController);
+        greenSeekBar = findViewById(R.id.greenSeekbar);
+        greenSeekBar.setOnSeekBarChangeListener(myAppController);
+        blueSeekBar = findViewById(R.id.blueSeekbar);
+        blueSeekBar.setOnSeekBarChangeListener(myAppController);
+
         TextView redText = findViewById(R.id.redText);
         TextView greenText = findViewById(R.id.greenText);
         TextView blueText = findViewById(R.id.blueText);
         //set spinner
-        Spinner dropdown = findViewById(R.id.hairStyleSelectors);
+        dropdown = findViewById(R.id.hairStyleSelectors);
+        dropdown.setOnItemSelectedListener(myAppController);
         //I took the following from guides.copath.com/Using-an-array-adapter
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, myAppController.strings);
         dropdown.setAdapter(arrayAdapter);
+        // I have to randomize the dropdown here because it selects once when it's created
+        // and face doesn't have access to the spinner
+        dropdown.setSelection((int)Math.round(Math.random()*2));
     }}
